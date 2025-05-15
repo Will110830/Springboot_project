@@ -10,7 +10,7 @@ CREATE SEQUENCE BOARD_SEQ START WITH 1 INCREMENT BY 1;
 
 -- 게시판 테이블 생성
 CREATE TABLE BOARD (
-    BOARD_ID VARCHAR2(11),                       -- 게시글 ID (PK)
+    BOARD_ID NUMBER(11),                        -- 게시글 ID (PK)
     TITLE VARCHAR2(30),                         -- 제목
     CONTENT CLOB,                               -- 내용
     WRITER VARCHAR2(11) NOT NULL,               -- 작성자
@@ -20,7 +20,13 @@ CREATE TABLE BOARD (
 --기본키
 alter table BOARD add Constraint BOARD_ID_PK primary key (BOARD_ID);
 
-SELECT * FROM board;
-
+CREATE OR REPLACE TRIGGER BOARD_ID_TRG
+BEFORE INSERT ON BOARD
+FOR EACH ROW
+BEGIN
+  IF :NEW.BOARD_ID IS NULL THEN
+    SELECT BOARD_SEQ.NEXTVAL INTO :NEW.BOARD_ID FROM DUAL;
+  END IF;
+END;
 
 COMMIT;

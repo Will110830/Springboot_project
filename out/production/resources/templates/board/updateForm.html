@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>게시글 수정</title>
+</head>
+<body>
+<h1>게시글 수정</h1>
+
+<form th:action="@{'/boards/' + ${updateForm.boardId} + '/edit'}" th:object="${updateForm}" method="post">
+
+  <input type="hidden" th:field="*{boardId}" />
+
+  <div>
+    <label>제목</label>
+    <input type="text" th:field="*{title}" />
+    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+  </div>
+
+  <div>
+    <label>내용</label>
+    <textarea th:field="*{content}"></textarea>
+    <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+  </div>
+
+  <div>
+    <label>작성자</label>
+    <input type="text" th:field="*{writer}" readonly />
+    <div th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}"></div>
+  </div>
+
+  <button type="submit">수정하기</button>
+</form>
+
+<a th:href="@{'/boards/' + ${updateForm.boardId}}">취소</a>
+
+</body>
+</html>

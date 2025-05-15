@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>게시글 작성</title>
+</head>
+<body>
+<h1>게시글 작성</h1>
+<form th:action="@{/boards/add}" th:object="${saveForm}" method="post">
+  <div>
+    <label>제목:</label>
+    <input type="text" th:field="*{title}" required />
+    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+  </div>
+  <div>
+    <label>작성자:</label>
+    <input type="text" th:field="*{writer}" required />
+    <div th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}"></div>
+  </div>
+  <div>
+    <label>내용:</label>
+    <textarea th:field="*{content}" required></textarea>
+    <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+  </div>
+  <button type="submit">등록</button>
+  <a th:href="@{/boards}">취소</a>
+</form>
+</body>
+</html>
